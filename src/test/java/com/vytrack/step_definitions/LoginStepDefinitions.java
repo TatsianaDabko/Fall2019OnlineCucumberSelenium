@@ -15,7 +15,13 @@ public class LoginStepDefinitions {
     @Given("user is on the login page")
     public void user_is_on_the_login_page() {
         System.out.println("Open login page");
-        String URL = ConfigurationReader.getProperty("qa3");
+        // -Denv=qa1, -Denv=qa2, -Denv=qa3
+        String env = "qa2";
+        if (System.getProperty("env") != null) {
+            env = System.getProperty("env");
+        }
+        String URL = ConfigurationReader.getProperty(env);
+        System.out.println("URL :: " + URL);
         Driver.getDriver().get(URL);
     }
 
@@ -44,4 +50,35 @@ public class LoginStepDefinitions {
         System.out.println("Login as a driver");
         loginPage.login("user19", "UserUser123");
     }
+
+    //    When user enters "storemanager85" username and "UserUser123" password
+    @When("user enters {string} username and {string} password")
+    public void user_enters_username_and_password(String string, String string2) {
+        System.out.printf("Login with user name %s and %s password\n", string, string2);
+        loginPage.login(string, string2);
+    }
+
+    @When("user navigates to {string} and {string}")
+    public void user_navigates_to_and(String tab, String module) {
+        System.out.printf("User clicks on the %s tab and navigates to %s module\n", tab, module);
+        loginPage.navigateTo(tab, module);
+    }
+
+    @Then("user name should be {string}")
+    public void user_name_should_be(String string) {
+        Assert.assertEquals(string, loginPage.getCurrentUserName());
+    }
+
+
+    @When("user logs in as {string}")
+    public void user_logs_in_as(String userType) {
+        loginPage.login(userType);
+    }
+
+    @Then("user verifies that page title is {string}")
+    public void user_verifies_that_page_title_is(String string) {
+        System.out.println("Verify that page title is: " + string);
+        Assert.assertEquals(string, Driver.getDriver().getTitle());
+    }
+
 }

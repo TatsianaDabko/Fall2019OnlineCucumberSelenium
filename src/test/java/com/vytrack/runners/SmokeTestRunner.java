@@ -10,15 +10,13 @@ import org.junit.runner.RunWith;
         features = "src/test/resources",
         dryRun = false,
         strict = false,
-        tags = "@sales_manager",
+        tags = "@smoke_test",
         plugin = {
-                "html:target/default-report",
+                "html:target/smoke_test_default-report",
                 "json:target/cucumber1.json",
                 "rerun:target/rerun.txt"
         }
 
 )
-public class CucumberRunner {
-
-
+public class SmokeTestRunner {
 }
